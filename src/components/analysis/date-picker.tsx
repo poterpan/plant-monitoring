@@ -1,22 +1,22 @@
 // src/components/analysis/date-picker.tsx
-"use client"
+"use client";
 
-import * as React from "react"
-import { format } from "date-fns"
-import { Calendar as CalendarIcon } from "lucide-react"
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Calendar } from "@/components/ui/calendar"
+import * as React from "react";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
-import { type SelectSingleEventHandler } from "react-day-picker"
+} from "@/components/ui/popover";
+import { type SelectSingleEventHandler } from "react-day-picker";
 
 interface DatePickerProps {
-  selected: Date | undefined
-  onSelect: SelectSingleEventHandler
+  selected: Date | undefined;
+  onSelect: SelectSingleEventHandler;
 }
 
 export function DatePicker({ selected, onSelect }: DatePickerProps) {
@@ -39,9 +39,10 @@ export function DatePicker({ selected, onSelect }: DatePickerProps) {
           mode="single"
           selected={selected}
           onSelect={onSelect}
+          defaultMonth={selected || new Date()}
           initialFocus
         />
       </PopoverContent>
     </Popover>
-  )
+  );
 }

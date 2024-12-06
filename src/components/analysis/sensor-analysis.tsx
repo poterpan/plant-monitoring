@@ -1,9 +1,16 @@
 // src/components/analysis/sensor-analysis.tsx
 "use client";
 
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { SensorData } from "@/services/api";
+import { Switch } from "@/components/ui/switch";
+import { SensorData, CO2AbsorptionPeriod } from "@/services/api";
 import {
   LineChart,
   Line,
@@ -13,15 +20,25 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
+  ReferenceArea,
 } from "recharts";
 import { format, parseISO } from "date-fns";
 
 interface SensorAnalysisProps {
   data: SensorData[];
+  absorptionData: CO2AbsorptionPeriod | null;
   isLoading: boolean;
+  showSmoothed: boolean;
+  setShowSmoothed: (show: boolean) => void;
 }
 
-export function SensorAnalysis({ data, isLoading }: SensorAnalysisProps) {
+export function SensorAnalysis({
+  data,
+  absorptionData,
+  isLoading,
+  showSmoothed,
+  setShowSmoothed,
+}: SensorAnalysisProps) {
   const chartData = data
     .reduce<Record<string, any>[]>((acc, reading) => {
       const time = format(parseISO(reading.timestamp), "HH:mm");
@@ -55,8 +72,37 @@ export function SensorAnalysis({ data, isLoading }: SensorAnalysisProps) {
 
       <TabsContent value="co2">
         <Card>
-          <CardHeader>
-            <CardTitle>CO2 Levels</CardTitle>
+          <CardHeader className="space-y-4">
+            <div className="flex items-center justify-between">
+              <CardTitle>CO2 Levels</CardTitle>
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="smooth-data"
+                  checked={showSmoothed}
+                  onCheckedChange={setShowSmoothed}
+                />
+                <label htmlFor="smooth-data" className="text-sm">
+                  {showSmoothed ? "Smoothed" : "Raw"} Data
+                </label>
+              </div>
+            </div>
+            {absorptionData && (
+              <CardDescription className="space-y-1">
+                <div>
+                  Main Absorption Period: {absorptionData.start_time} -{" "}
+                  {absorptionData.end_time}
+                </div>
+                <div>Duration: {absorptionData.duration_minutes} minutes</div>
+                <div>
+                  Total Absorption: {absorptionData.total_absorption.toFixed(1)}{" "}
+                  ppm
+                </div>
+                <div>
+                  Average Rate:{" "}
+                  {Math.abs(absorptionData.avg_co2_change).toFixed(2)} ppm/min
+                </div>
+              </CardDescription>
+            )}
           </CardHeader>
           <CardContent>
             {isLoading ? (
@@ -70,14 +116,19 @@ export function SensorAnalysis({ data, isLoading }: SensorAnalysisProps) {
                     <CartesianGrid strokeDasharray="3 3" />
                     <XAxis dataKey="time" />
                     <YAxis
-                      domain={["dataMin - 50", "dataMax + 50"]} // 自動設置範圍，並留有一些邊距
+                      domain={["dataMin - 50", "dataMax + 50"]}
+                      tickFormatter={(value) => Math.round(value).toString()}
                       label={{
                         value: "CO2 (ppm)",
                         angle: -90,
                         position: "insideLeft",
                       }}
                     />
-                    <Tooltip />
+                    <Tooltip
+                      formatter={(value) =>
+                        value ? `${Number(value).toFixed(2)} ppm` : "N/A"
+                      }
+                    />
                     <Legend />
                     <Line
                       type="monotone"
@@ -93,6 +144,15 @@ export function SensorAnalysis({ data, isLoading }: SensorAnalysisProps) {
                       stroke="#82ca9d"
                       dot={false}
                     />
+                    {absorptionData && (
+                      <ReferenceArea
+                        x1={absorptionData.start_time.split(':').slice(0, 2).join(':')}
+                        x2={absorptionData.end_time.split(':').slice(0, 2).join(':')}
+                        fill="#4CAF50"
+                        fillOpacity={0.3}
+                        isFront={false}
+                      />
+                    )}
                   </LineChart>
                 </ResponsiveContainer>
               </div>
@@ -100,8 +160,6 @@ export function SensorAnalysis({ data, isLoading }: SensorAnalysisProps) {
           </CardContent>
         </Card>
       </TabsContent>
-
-      {/* 溫度和濕度的標籤頁內容類似，需要時再添加 */}
     </Tabs>
   );
 }

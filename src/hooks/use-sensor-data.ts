@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query"
 import api from "@/services/api"
-import { startOfDay, endOfDay, formatISO, parseISO } from 'date-fns'
+import { startOfDay, endOfDay, formatISO } from 'date-fns'
 
 
 export function useLatestData() {
@@ -10,20 +10,34 @@ export function useLatestData() {
     })
   }
   
-  export function useDailyData(latestTimestamp: string | undefined | null) {
+  interface DataOptions {
+    smooth?: boolean;
+   }
+   
+   export function useDailyData(latestTimestamp: string | undefined | null, options: DataOptions = {}) {
     const getDayRange = (timestamp: string) => {
-      const date = parseISO(timestamp)
+      const date = new Date(timestamp.split('+')[0])
       return {
-        start: formatISO(startOfDay(date)),
-        end: formatISO(endOfDay(date))
+        start: formatISO(startOfDay(date)).split('+')[0],
+        end: formatISO(endOfDay(date)).split('+')[0]
       }
     }
   
     const timeRange = latestTimestamp ? getDayRange(latestTimestamp) : null
   
+    // 在查詢前先檢查時間範圍
+    // console.log('Time range:', timeRange);
+    // console.log('Options:', options);
+  
     return useQuery({
-      queryKey: ["sensorData", "daily", timeRange?.start, timeRange?.end],
-      queryFn: () => api.getData(timeRange!.start, timeRange!.end),
+      queryKey: ["sensorData", "daily", timeRange?.start, timeRange?.end, options.smooth],
+      queryFn: async () => {
+        const data = options.smooth 
+          ? await api.getSmoothedData(timeRange!.start, timeRange!.end)
+          : await api.getData(timeRange!.start, timeRange!.end);
+        // console.log('Fetched data:', data);
+        return data;
+      },
       enabled: !!timeRange,
     })
   }
@@ -55,4 +69,15 @@ export function useDailyAnalysis(
     queryKey: ["analysis", "daily", startDate, endDate, location],
     queryFn: () => api.getDailyAnalysis(startDate, endDate, location),
   })
+}
+
+export function useAbsorptionData(date: Date | null) {
+  return useQuery({
+    queryKey: ["absorption", date],
+    queryFn: async () => {
+      if (!date) return null;
+      return api.getCO2AbsorptionPeriod(formatISO(date, { representation: 'date' }));
+    },
+    enabled: !!date
+  });
 }

@@ -17,6 +17,16 @@ export interface ImageInfo {
   date?: string;
 }
 
+export interface CO2AbsorptionPeriod {
+  date: string;
+  start_time: string;
+  end_time: string;
+  slope: number;
+  duration_minutes: number;
+  total_absorption: number;
+  avg_co2_change: number;
+ }
+
 const api = {
   // 獲取最新的感測器數據
   getLatestData: async () => {
@@ -63,6 +73,23 @@ const api = {
     const response = await axios.get(`${API_BASE_URL}/images/available-dates`);
     return response.data;
   },
+
+  // 獲取平滑後的數據
+  getSmoothedData: async (startTime: string, endTime: string, windowLength: number = 21) => {
+    const params = new URLSearchParams({
+      start_time: startTime,
+      end_time: endTime,
+      window_length: windowLength.toString()
+    });
+    const response = await axios.get(`${API_BASE_URL}/data/smoothed?${params}`);
+    return response.data;
+  },
+
+  getCO2AbsorptionPeriod: async (date: string) => {
+    const response = await axios.get(`${API_BASE_URL}/analysis/co2-absorption-period/${date}`);
+    return response.data as CO2AbsorptionPeriod;
+   }
+   
 };
 
 export default api;
