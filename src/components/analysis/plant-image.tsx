@@ -119,10 +119,10 @@ export function PlantImage({ date }: PlantImageProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Plant Image</CardTitle>
+        <CardTitle>植物影像</CardTitle>
         {imageInfo.isFromDifferentDate && imageInfo.actualDate && (
           <p className="text-sm text-muted-foreground">
-            Showing nearest available image ({format(new Date(
+            當日無紀錄 顯示最近的可用影像 ({format(new Date(
               parseInt(imageInfo.actualDate.slice(0, 4)),
               parseInt(imageInfo.actualDate.slice(4, 6)) - 1,
               parseInt(imageInfo.actualDate.slice(6, 8))

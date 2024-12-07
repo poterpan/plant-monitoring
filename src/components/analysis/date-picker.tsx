@@ -31,7 +31,7 @@ export function DatePicker({ selected, onSelect }: DatePickerProps) {
           )}
         >
           <CalendarIcon className="mr-2 h-4 w-4" />
-          {selected ? format(selected, "PPP") : "Pick a date"}
+          {selected ? format(selected, "PPP") : "請選擇日期"}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0" align="end">

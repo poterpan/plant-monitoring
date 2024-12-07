@@ -8,8 +8,8 @@ import QueryProvider from "@/components/providers/query-provider"
 const inter = Inter({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "Plant Growth Monitoring",
-  description: "Monitor plant growth and environmental conditions",
+  title: "植物生長監測系統",
+  description: "即時監測與分析植物生長與環境條件",
 }
 
 export default function RootLayout({

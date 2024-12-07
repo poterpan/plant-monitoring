@@ -43,10 +43,10 @@ export function DailySummary({ data, isLoading }: DailySummaryProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>CO2 Trend</CardTitle>
+        <CardTitle>CO2 趨勢</CardTitle>
         {chartData.length > 0 && (
           <p className="text-sm text-muted-foreground">
-            Date: {chartData[0].date}
+            資料日期: {chartData[0].date}
           </p>
         )}
       </CardHeader>
@@ -83,14 +83,14 @@ export function DailySummary({ data, isLoading }: DailySummaryProps) {
                   }}
                   formatter={(value, name) => [
                     `${value} ppm`, 
-                    name === 'Indoor CO2' ? 'Indoor CO2' : 'Outdoor CO2'
+                    name
                   ]}
                 />
                 <Legend />
                 <Line
                   type="monotone"
                   dataKey="indoorCO2"
-                  name="Indoor CO2"
+                  name="箱體 CO2"
                   stroke="#8884d8"
                   dot={false}
                   connectNulls
@@ -98,7 +98,7 @@ export function DailySummary({ data, isLoading }: DailySummaryProps) {
                 <Line
                   type="monotone"
                   dataKey="outdoorCO2"
-                  name="Outdoor CO2"
+                  name="環境 CO2"
                   stroke="#82ca9d"
                   dot={false}
                   connectNulls

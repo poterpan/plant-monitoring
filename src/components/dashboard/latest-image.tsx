@@ -24,7 +24,7 @@ export function LatestImage({ image, isLoading }: LatestImageProps) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Latest Plant Image</CardTitle>
+          <CardTitle>最近植物影像</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex h-[400px] items-center justify-center bg-muted">
@@ -39,7 +39,7 @@ export function LatestImage({ image, isLoading }: LatestImageProps) {
     return (
       <Card>
         <CardHeader>
-          <CardTitle>Latest Plant Image</CardTitle>
+          <CardTitle>最近植物影像</CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex h-[400px] items-center justify-center bg-muted">
@@ -60,10 +60,10 @@ export function LatestImage({ image, isLoading }: LatestImageProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Latest Plant Image</CardTitle>
+        <CardTitle>最近植物影像</CardTitle>
         {image.date && (
           <p className="text-sm text-muted-foreground">
-            Captured on: {formatDate(image.date)}
+            上次更新: {formatDate(image.date)}
           </p>
         )}
       </CardHeader>

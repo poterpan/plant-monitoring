@@ -25,6 +25,7 @@ export interface CO2AbsorptionPeriod {
   duration_minutes: number;
   total_absorption: number;
   avg_co2_change: number;
+  estimated_absorption: number;
  }
 
 const api = {

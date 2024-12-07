@@ -66,8 +66,8 @@ export function SensorAnalysis({
     <Tabs defaultValue="co2">
       <TabsList>
         <TabsTrigger value="co2">CO2</TabsTrigger>
-        <TabsTrigger value="temp">Temperature</TabsTrigger>
-        <TabsTrigger value="humidity">Humidity</TabsTrigger>
+        <TabsTrigger value="temp">溫度</TabsTrigger>
+        <TabsTrigger value="humidity">相對濕度</TabsTrigger>
       </TabsList>
 
       <TabsContent value="co2">
@@ -82,24 +82,23 @@ export function SensorAnalysis({
                   onCheckedChange={setShowSmoothed}
                 />
                 <label htmlFor="smooth-data" className="text-sm">
-                  {showSmoothed ? "Smoothed" : "Raw"} Data
+                  {showSmoothed ? "平滑" : "原始"}數據
                 </label>
               </div>
             </div>
             {absorptionData && (
               <CardDescription className="space-y-1">
                 <div>
-                  Main Absorption Period: {absorptionData.start_time} -{" "}
+                  主吸收時間段: {absorptionData.start_time} -{" "}
                   {absorptionData.end_time}
                 </div>
-                <div>Duration: {absorptionData.duration_minutes} minutes</div>
+                <div>持續時間: {absorptionData.duration_minutes} 分鐘</div>
                 <div>
-                  Total Absorption: {absorptionData.total_absorption.toFixed(1)}{" "}
-                  ppm
+                  估計總吸收量:{" "}
+                  {absorptionData.estimated_absorption.toFixed(1)} ppm
                 </div>
                 <div>
-                  Average Rate:{" "}
-                  {Math.abs(absorptionData.avg_co2_change).toFixed(2)} ppm/min
+                  速率: {Math.abs(absorptionData.slope).toFixed(2)} ppm/min
                 </div>
               </CardDescription>
             )}
@@ -133,21 +132,27 @@ export function SensorAnalysis({
                     <Line
                       type="monotone"
                       dataKey="indoor"
-                      name="Indoor"
+                      name="箱體"
                       stroke="#8884d8"
                       dot={false}
                     />
                     <Line
                       type="monotone"
                       dataKey="outdoor"
-                      name="Outdoor"
+                      name="環境"
                       stroke="#82ca9d"
                       dot={false}
                     />
                     {absorptionData && (
                       <ReferenceArea
-                        x1={absorptionData.start_time.split(':').slice(0, 2).join(':')}
-                        x2={absorptionData.end_time.split(':').slice(0, 2).join(':')}
+                        x1={absorptionData.start_time
+                          .split(":")
+                          .slice(0, 2)
+                          .join(":")}
+                        x2={absorptionData.end_time
+                          .split(":")
+                          .slice(0, 2)
+                          .join(":")}
                         fill="#4CAF50"
                         fillOpacity={0.3}
                         isFront={false}

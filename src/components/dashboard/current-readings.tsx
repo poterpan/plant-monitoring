@@ -25,7 +25,7 @@ export function CurrentReadings({ data, isLoading }: CurrentReadingsProps) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Current Readings</CardTitle>
+        <CardTitle>即時數值</CardTitle>
         <div className="flex gap-6">
           <p className="text-sm text-muted-foreground flex items-center gap-1">
             <Leaf className="h-4 w-4" />
@@ -52,13 +52,13 @@ export function CurrentReadings({ data, isLoading }: CurrentReadingsProps) {
               </div>
               <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                 <div>
-                  <p className="text-sm text-muted-foreground">Indoor</p>
+                  <p className="text-sm text-muted-foreground">箱體</p>
                   <p className="text-2xl font-bold">
                     {indoorData?.co2 ?? '-'} ppm
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Outdoor</p>
+                  <p className="text-sm text-muted-foreground">環境</p>
                   <p className="text-2xl font-bold">
                     {outdoorData?.co2 ?? '-'} ppm
                   </p>
@@ -70,17 +70,17 @@ export function CurrentReadings({ data, isLoading }: CurrentReadingsProps) {
             <div className="rounded-lg border p-3">
               <div className="flex items-center space-x-2">
                 <Thermometer className="h-4 w-4" />
-                <h3 className="font-medium">Temperature</h3>
+                <h3 className="font-medium">溫度</h3>
               </div>
               <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                 <div>
-                  <p className="text-sm text-muted-foreground">Indoor</p>
+                  <p className="text-sm text-muted-foreground">箱體</p>
                   <p className="text-2xl font-bold">
                     {indoorData?.temperature ?? '-'}°C
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Outdoor</p>
+                  <p className="text-sm text-muted-foreground">環境</p>
                   <p className="text-2xl font-bold">
                     {outdoorData?.temperature ?? '-'}°C
                   </p>
@@ -92,17 +92,17 @@ export function CurrentReadings({ data, isLoading }: CurrentReadingsProps) {
             <div className="rounded-lg border p-3">
               <div className="flex items-center space-x-2">
                 <Droplets className="h-4 w-4" />
-                <h3 className="font-medium">Humidity</h3>
+                <h3 className="font-medium">相對濕度</h3>
               </div>
               <div className="mt-3 grid grid-cols-2 gap-2 text-center">
                 <div>
-                  <p className="text-sm text-muted-foreground">Indoor</p>
+                  <p className="text-sm text-muted-foreground">箱體</p>
                   <p className="text-2xl font-bold">
                     {indoorData?.humidity ?? '-'}%
                   </p>
                 </div>
                 <div>
-                  <p className="text-sm text-muted-foreground">Outdoor</p>
+                  <p className="text-sm text-muted-foreground">環境</p>
                   <p className="text-2xl font-bold">
                     {outdoorData?.humidity ?? '-'}%
                   </p>

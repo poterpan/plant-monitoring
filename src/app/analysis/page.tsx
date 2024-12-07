@@ -34,11 +34,11 @@ export default function AnalysisPage() {
     <div className="py-8">
       <div className="flex items-center justify-between mb-8">
         <div className="space-y-1">
-          <h1 className="text-3xl font-bold tracking-tight">Analysis</h1>
+          <h1 className="text-3xl font-bold tracking-tight">歷史分析</h1>
           {effectiveDate && (
             <p className="text-muted-foreground">
-              Showing data for {format(effectiveDate, "yyyy/MM/dd")}
-              {!selectedDate && " (Latest Data)"}
+              顯示數據為 {format(effectiveDate, "yyyy/MM/dd")}
+              {!selectedDate && " (最新紀錄)"}
             </p>
           )}
         </div>

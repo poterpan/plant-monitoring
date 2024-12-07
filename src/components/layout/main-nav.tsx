@@ -13,7 +13,7 @@ export function MainNav() {
         "mr-6 flex items-center space-x-2",
         "text-sm font-medium transition-colors hover:text-primary"
       )}>
-        <span>Plant Growth Monitoring</span>
+        <span>植物生長監測系統</span>
       </Link>
       <nav className="flex items-center space-x-6 text-sm font-medium">
         <Link
@@ -23,7 +23,7 @@ export function MainNav() {
             pathname === "/" ? "text-foreground" : "text-foreground/60"
           )}
         >
-          Dashboard
+          總覽
         </Link>
         <Link
           href="/analysis"
@@ -32,7 +32,7 @@ export function MainNav() {
             pathname === "/analysis" ? "text-foreground" : "text-foreground/60"
           )}
         >
-          Analysis
+          歷史分析
         </Link>
       </nav>
     </div>

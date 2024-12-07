@@ -5,7 +5,6 @@ import { LatestImage } from "@/components/dashboard/latest-image"
 import { CurrentReadings } from "@/components/dashboard/current-readings"
 import { DailySummary } from "@/components/dashboard/daily-summary"
 import { useLatestData, useDailyData, useLatestImage } from "@/hooks/use-sensor-data"
-import { subHours, formatISO } from "date-fns"
 
 export default function DashboardPage() {
   // 首先獲取最新數據
@@ -20,7 +19,7 @@ export default function DashboardPage() {
   return (
     <div className="py-8">
       <div className="flex items-center justify-between mb-8">
-        <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+        <h1 className="text-3xl font-bold tracking-tight">總覽</h1>
       </div>
       
       <div className="grid gap-8 md:grid-cols-2">
