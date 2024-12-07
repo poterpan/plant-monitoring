@@ -74,7 +74,7 @@ export function SensorAnalysis({
         <Card>
           <CardHeader className="space-y-4">
             <div className="flex items-center justify-between">
-              <CardTitle>CO2 Levels</CardTitle>
+              <CardTitle>CO2 濃度</CardTitle>
               <div className="flex items-center space-x-2">
                 <Switch
                   id="smooth-data"
